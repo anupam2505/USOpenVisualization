@@ -1,9 +1,3 @@
-# shinyHome
-# Real Estate Analytics and Forecasting
-# John James
-# Date: June 27, 2016
-
-#ui.R
 
 dashboardPage(skin = "green",
               dashboardHeader(title = "US Open Dashboard"),
@@ -146,75 +140,92 @@ dashboardPage(skin = "green",
                   tabItem(tabName = "explorer",
                           fluidPage(
                             title = "Market Explorer",
-                            column(width = 2,
+                            
+                            column(width = 12,
                                    box(
                                      title = "Query Builder",
-                                     status = "primary",
                                      width = 12,
+                                     status = "primary",
                                      solidHeader = TRUE,
                                      background = "navy",
-                                     box(
-                                       width = 12,
-                                       status = "primary",
-                                       solidHeader = FALSE,
-                                       background = "navy",
-                                       uiOutput("levelQueryUi")
-                                     ),# end of box
-                                     conditionalPanel(
-                                       condition = "input.analysisLevel == 2",
-                                       box(
-                                         status = "primary",
-                                         solidHeader = FALSE,
-                                         width = 12,
-                                         background = "navy",
-                                         uiOutput("stateQuery2Ui")
-                                       )# end of box
-                                     ),# end of conditional panel  
-                                     conditionalPanel(
-                                       condition = "input.analysisLevel == 3",
-                                       box(
-                                         status = "primary",
-                                         solidHeader = FALSE,
-                                         width = 12,
-                                         background = "navy",
-                                         uiOutput("stateQuery3Ui"),
-                                         uiOutput("countyQuery3Ui")
-                                       )# end of box
-                                     ),# end of conditionalpanel    
-                                     conditionalPanel(
-                                       condition = "input.analysisLevel == 4",
-                                       box(
-                                         status = "primary",
-                                         solidHeader = FALSE,
-                                         width = 12,
-                                         background = "navy",
-                                         uiOutput("stateQuery4Ui"),
-                                         uiOutput("countyQuery4Ui"),
-                                         uiOutput("cityQuery4Ui")
-                                       )# end of box
-                                     ),# end of conditionalpanel
-                                     box(
-                                       status = "primary",
-                                       solidHeader = FALSE,
-                                       width = 12,
-                                       background = "navy",
-                                       sliderInput("hviQuery", label = "Home Value Range ($000)", min = 0, max = 2000, value = c(0,1000)),
-                                       checkboxInput("maxValue", label = "Include all values exceeding $2m", value = FALSE)
-                                     ), # end of box
-                                     box(
-                                       status = "primary",
-                                       solidHeader = FALSE,
-                                       width = 12,
-                                       background = "navy",
-                                       selectInput("horizon", label = "Time Horizon:", 
-                                                   choices = c("Monthly", "Quarterly", "Annual", "5 Year", "10 Year"),
-                                                   selected = "Annual",
-                                                   selectize = FALSE),
-                                       numericInput("minGrowth", label = "Minimum Growth Rate (%)", value = 1)
-                                     ),# end of box
-                                     actionButton("query", label = "Go") 
-                                   )# end of box
-                            ),# end of column
+                                     uiOutput("country1Query4Ui"),
+                                     uiOutput("country2Query4Ui"),
+                                     actionButton("query", label = "Go")
+                                      )
+                                   
+                                   ),
+                            
+                            
+                            
+#                             column(width = 2,
+#                                    box(
+#                                      title = "Query Builder",
+#                                      status = "primary",
+#                                      width = 12,
+#                                      solidHeader = TRUE,
+#                                      background = "navy",
+#                                      box(
+#                                        width = 12,
+#                                        status = "primary",
+#                                        solidHeader = FALSE,
+#                                        background = "navy",
+#                                        uiOutput("levelQueryUi")
+#                                      ),# end of box
+#                                      conditionalPanel(
+#                                        condition = "input.analysisLevel == 2",
+#                                        box(
+#                                          status = "primary",
+#                                          solidHeader = FALSE,
+#                                          width = 12,
+#                                          background = "navy",
+#                                          uiOutput("stateQuery2Ui")
+#                                        )# end of box
+#                                      ),# end of conditional panel  
+#                                      conditionalPanel(
+#                                        condition = "input.analysisLevel == 3",
+#                                        box(
+#                                          status = "primary",
+#                                          solidHeader = FALSE,
+#                                          width = 12,
+#                                          background = "navy",
+#                                          uiOutput("stateQuery3Ui"),
+#                                          uiOutput("countyQuery3Ui")
+#                                        )# end of box
+#                                      ),# end of conditionalpanel    
+#                                      conditionalPanel(
+#                                        condition = "input.analysisLevel == 4",
+#                                        box(
+#                                          status = "primary",
+#                                          solidHeader = FALSE,
+#                                          width = 12,
+#                                          background = "navy",
+#                                          uiOutput("stateQuery4Ui"),
+#                                          uiOutput("countyQuery4Ui"),
+#                                          uiOutput("cityQuery4Ui")
+#                                        )# end of box
+#                                      ),# end of conditionalpanel
+#                                      box(
+#                                        status = "primary",
+#                                        solidHeader = FALSE,
+#                                        width = 12,
+#                                        background = "navy",
+#                                        sliderInput("hviQuery", label = "Home Value Range ($000)", min = 0, max = 2000, value = c(0,1000)),
+#                                        checkboxInput("maxValue", label = "Include all values exceeding $2m", value = FALSE)
+#                                      ), # end of box
+#                                      box(
+#                                        status = "primary",
+#                                        solidHeader = FALSE,
+#                                        width = 12,
+#                                        background = "navy",
+#                                        selectInput("horizon", label = "Time Horizon:", 
+#                                                    choices = c("Monthly", "Quarterly", "Annual", "5 Year", "10 Year"),
+#                                                    selected = "Annual",
+#                                                    selectize = FALSE),
+#                                        numericInput("minGrowth", label = "Minimum Growth Rate (%)", value = 1)
+#                                      ),# end of box
+#                                      actionButton("query", label = "Go") 
+#                                    )# end of box
+#                             ),# end of column
                             conditionalPanel(
                               condition = "input.query",
                               column(width = 10,

@@ -39,7 +39,6 @@ shinyServer(function(input, output, session) {
   output$usAnnualBox <- renderValueBox({
     current <- matches
     n2 = nrow(unique(cbind(unique(matches$country1), unique(matches$country2))))
-    current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
       paste0(n2), paste( "Total Number of countries "), icon = icon("bar-chart"), color = "red"
     )
@@ -207,7 +206,7 @@ shinyServer(function(input, output, session) {
   # State query UI
   output$stateQuery2Ui <- renderUI({
     states <- sort(unique(geo$StateName))
-    selectInput("state2", label = "State:", choices = c(Choose='', as.character(states)), selected = dflt$state, selectize = FALSE)
+    selectInput("state2", label = "State:", choices = c(Choose='', as.character(states)), selectize = FALSE)
   })
   
   # State query UI
@@ -236,6 +235,21 @@ shinyServer(function(input, output, session) {
     counties <- arrange(unique(subset(geo, StateName == state, select = County)), County)
     selectInput("county3", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dflt$county, selectize = FALSE)
   })
+  
+  ## Select Country 1
+  output$country1Query4Ui <- renderUI({
+    
+    country1 = sort(unique(matches$country1))
+    selectInput("state3", label = "Country1:", choices = c(Choose='', as.character(country1)), selected = dflt$state, selectize = FALSE)
+  }) 
+  
+  ## Select Country 2
+  output$country2Query4Ui <- renderUI({
+    
+    country2 = sort(unique(matches$country2))
+    selectInput("state3", label = "Country2:", choices = c(Choose='', as.character(country2)), selected = dflt$state, selectize = FALSE)
+  }) 
+  
   
   # County Query UI  
   output$countyQuery4Ui <- renderUI({
