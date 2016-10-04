@@ -150,10 +150,26 @@ dashboardPage(skin = "green",
                                      background = "navy",
                                      uiOutput("country1Query4Ui"),
                                      uiOutput("country2Query4Ui"),
-                                     actionButton("query", label = "Go")
-                                      )
+                                     actionButton("query1", label = "Go")
+                                      ),
                                    
-                                   ),
+                                   conditionalPanel(
+                                     condition = "input.query1",
+                                     column(width = 12,
+                                            
+                                            box(
+                                              title = "Wins VS Year",
+                                              status = "primary",
+                                              width = 12,
+                                              solidHeader = FALSE,
+                                              collapsible = TRUE,
+                                              
+                                              showOutput("winbyyear", "nvd3")
+                                            )
+                                     )
+                                   )
+                                   
+                            )
                             
                             
                             
@@ -226,70 +242,71 @@ dashboardPage(skin = "green",
 #                                      actionButton("query", label = "Go") 
 #                                    )# end of box
 #                             ),# end of column
-                            conditionalPanel(
-                              condition = "input.query",
-                              column(width = 10,
-                                     box(
-                                       title = "Market Data",
-                                       status = "primary",
-                                       width = 12,
-                                       solidHeader = TRUE,
-                                       collapsible = TRUE,
-                                       fluidRow(
-                                         box(
-                                           title = "Value Growth by Value Scatterplot",
-                                           status = "primary",
-                                           width = 12,
-                                           solidHeader = FALSE,
-                                           collapsible = TRUE,
-                                           plotlyOutput("valueByGrowth")
-                                         )# end of box
-                                       ),# end of fluidrow
-                                       fluidRow(
-                                         column(width = 12,
-                                                box(
-                                                  title = "Distribution of Median Home Values",
-                                                  status = "primary",
-                                                  width = 6,
-                                                  solidHeader = FALSE,
-                                                  collapsible = TRUE,
-                                                  plotOutput("valueHist")
-                                                ),# end of box
-                                                box(
-                                                  title = "Markets Table",
-                                                  status = "primary",
-                                                  width = 6,
-                                                  solidHeader = FALSE,
-                                                  collapsible = TRUE,
-                                                  dataTableOutput("marketTbl")
-                                                )# end of box
-                                         ),# end of column
-                                         column(width = 12,
-                                                box(
-                                                  title = "Top Markets by Growth",
-                                                  status = "primary",
-                                                  width = 12,
-                                                  height = 400,
-                                                  solidHeader = FALSE,
-                                                  collapsible = TRUE,
-                                                  showOutput("topByGrowth", "nvd3")
-                                                )# end of box
-                                         )# end of column
-                                       ),# end of fluidRow
-                                       fluidRow(
-                                         box(
-                                           title = "Median Home Value Time Series for Top Growth Markets",
-                                           status = "primary",
-                                           width = 12,
-                                           height = 700,
-                                           solidHeader = FALSE,
-                                           collapsible = TRUE,
-                                           showOutput("topMarketsTS", "nvd3")
-                                         ) #End of Box
-                                       )# end of fluidrow
-                                     )# end of box
-                              )#end of column
-                            ) # end of conditionalpanel
+#                             conditionalPanel(
+#                               condition = "input.query",
+#                               column(width = 10,
+#                                      box(
+#                                        title = "Market Data",
+#                                        status = "primary",
+#                                        width = 12,
+#                                        solidHeader = TRUE,
+#                                        collapsible = TRUE,
+#                                        fluidRow(
+#                                          box(
+#                                            title = "Wins VS Year",
+#                                            status = "primary",
+#                                            width = 12,
+#                                            solidHeader = FALSE,
+#                                            collapsible = TRUE,
+#                                            
+#                                            showOutput("winbyyear", "nvd3")
+#                                          )# end of box
+#                                        ),# end of fluidrow
+#                                        fluidRow(
+#                                          column(width = 12,
+#                                                 box(
+#                                                   title = "Distribution of Median Home Values",
+#                                                   status = "primary",
+#                                                   width = 6,
+#                                                   solidHeader = FALSE,
+#                                                   collapsible = TRUE,
+#                                                   plotOutput("valueHist")
+#                                                 ),# end of box
+#                                                 box(
+#                                                   title = "Markets Table",
+#                                                   status = "primary",
+#                                                   width = 6,
+#                                                   solidHeader = FALSE,
+#                                                   collapsible = TRUE,
+#                                                   dataTableOutput("marketTbl")
+#                                                 )# end of box
+#                                          ),# end of column
+#                                          column(width = 12,
+#                                                 box(
+#                                                   title = "Top Markets by Growth",
+#                                                   status = "primary",
+#                                                   width = 12,
+#                                                   height = 400,
+#                                                   solidHeader = FALSE,
+#                                                   collapsible = TRUE,
+#                                                   showOutput("topByGrowth", "nvd3")
+#                                                 )# end of box
+#                                          )# end of column
+#                                        ),# end of fluidRow
+#                                        fluidRow(
+#                                          box(
+#                                            title = "Median Home Value Time Series for Top Growth Markets",
+#                                            status = "primary",
+#                                            width = 12,
+#                                            height = 700,
+#                                            solidHeader = FALSE,
+#                                            collapsible = TRUE,
+#                                            showOutput("topMarketsTS", "nvd3")
+#                                          ) #End of Box
+#                                        )# end of fluidrow
+#                                      )# end of box
+#                               )#end of column
+#                             ) # end of conditionalpanel
                           ) # End of fluidPage
                   ), # End of tabItem 
                   tabItem(tabName = "valueAnalysis",

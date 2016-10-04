@@ -240,14 +240,14 @@ shinyServer(function(input, output, session) {
   output$country1Query4Ui <- renderUI({
     
     country1 = sort(unique(matches$country1))
-    selectInput("state3", label = "Country1:", choices = c(Choose='', as.character(country1)), selected = dflt$state, selectize = FALSE)
+    selectInput("countryinput1", label = "Country1:", choices = c(Choose='', as.character(country1)), selectize = FALSE)
   }) 
   
   ## Select Country 2
   output$country2Query4Ui <- renderUI({
     
     country2 = sort(unique(matches$country2))
-    selectInput("state3", label = "Country2:", choices = c(Choose='', as.character(country2)), selected = dflt$state, selectize = FALSE)
+    selectInput("countryinput2", label = "Country2:", choices = c(Choose='', as.character(country2)), selectize = FALSE)
   }) 
   
   
@@ -284,6 +284,32 @@ shinyServer(function(input, output, session) {
     }  
     selectInput("city4", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dflt$city, selectize = FALSE)
   })
+  
+  
+  
+  
+  
+  
+  # Get country1 screen data
+  screencountry1Data <-function() {
+    # Get Deta
+    abc = input$countryinput1
+    
+    count1 <- ddply(matches, .(abc, matches$year), nrow)
+    names(count1) <- c("country", "year", "Freq")
+    return(count1)
+  }
+  
+  # Get country2 screen data
+  screencountry2Data <-function() {
+    # Get Deta
+    
+    country2 = input$countryinput2
+    count2 <- ddply(matches, .(country2, matches$year), nrow)
+    names(count2) <- c("country", "year", "Freq")
+    return(count2)
+  }
+  
   
   
   # Get and screen data based upon home value and growth rates
@@ -467,11 +493,41 @@ shinyServer(function(input, output, session) {
     )
     
     validate(
-      need(nrow(d)>0, "No markets meet your search criteria.  Please select adjust home value range, minimum growth rate, and/or the geographic filter.")
+      need(nrow(d)>0, "No Result for this query.")
     )
     
     return(d)
   }, ignoreNULL = FALSE)
+  
+  
+  #### Get win data
+  getWinData <- eventReactive(input$query, {
+    
+    d <- getData()
+    
+    # Configure Chart based upon input horizon
+    horizon <- input$horizon
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
+    
+    # Sort by horizon
+    if (nrow(d) != 0) {
+      d <- switch(horizon,
+                  Monthly = arrange(d, desc(Monthly)),
+                  Quarterly = arrange(d, desc(Quarterly)),
+                  Annual = arrange(d, desc(Annual)),
+                  Five = arrange(d, desc(Five_Year)),
+                  Ten = arrange(d, desc(Ten_Year)))
+    } 
+    
+    
+  }, ignoreNULL = FALSE)
+  
+  
+  
   
   
   # Get Growth Data
@@ -531,49 +587,21 @@ shinyServer(function(input, output, session) {
     return(m)
   }
   
-  output$valueByGrowth <- renderPlotly({
+  
+  
+  output$winbyyear <- renderChart({
     
-    withProgress(message = "Rendering Value By Growth Plot", {
+    withProgress(message = "Rendering number of wins over years", {
       
-      # Get Data
-      d <- getGrowthData()
+      d1 = screencountry1Data()
+      d2 = screencountry2Data()
+      
+      
       
       # Subset into top results
-      if (!is.null(d)) {
-        numBars <- 1000
-        if (nrow(d) < numBars) {
-          numBars <- nrow(d)
-        }
-        d <- d[1:numBars,]
-      }
+      p <- nPlot(Freq ~ year,  type = 'lineChart', id = 'chart',dom = "winbyyear", data = d1)
       
-      # Prepare data based upon input horizon
-      horizon <- isolate(input$horizon)
-      if (horizon == "5 Year") {
-        horizon <- "Five"
-      } else if (horizon == "10 Year") {
-        horizon <- "Ten"
-      }
-      
-      d <- switch(horizon,
-                  Monthly = subset(d, select = c(location, Value, Monthly)),
-                  Quarterly = subset(d, select = c(location, Value, Quarterly)),  
-                  Annual = subset(d, select = c(location, Value, Annual)),            
-                  Five = subset(d, select = c(location, Value, Five_Year)),            
-                  Ten = subset(d, select = c(location, Value, Ten_Year))
-      )
-      colnames(d) <- c("Location", "Value", "Growth")
-      
-      # Convert Growth Rate to Percentage
-      d$Growth = as.numeric(d$Growth) * 100
-      
-      # Designate axis labels
-      x <- list(title = "Median Home Value")
-      y <- list(title = "Percent Value Growth")
-      
-      # Prepare plot
-      p <- plot_ly(d, x = Value, y = Growth, text = Location, mode = "markers", color = Value, size = Value) %>%
-        layout(xaxis = x, yaxis = y)
+      return(p)
     })
   })
   
