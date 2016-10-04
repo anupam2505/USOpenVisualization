@@ -239,15 +239,16 @@ shinyServer(function(input, output, session) {
   ## Select Country 1
   output$country1Query4Ui <- renderUI({
     
-    country1 = sort(unique(matches$country1))
-    selectInput("countryinput1", label = "Country1:", choices = c(Choose='', as.character(country1)), selectize = FALSE)
+    country1 = unique(sort(unique(rbind(matches$country1, matches$country2))))
+    # country1 = sort(unique(matches$country1))
+    selectInput("countryinput1", label = "Select Country A:", choices = c(Choose='', as.character(country1)), selectize = FALSE)
   }) 
   
   ## Select Country 2
   output$country2Query4Ui <- renderUI({
-    
-    country2 = sort(unique(matches$country2))
-    selectInput("countryinput2", label = "Country2:", choices = c(Choose='', as.character(country2)), selectize = FALSE)
+    country2 = unique(sort(unique(rbind(matches$country1, matches$country2))))
+    # country2 = sort(unique(matches$country2))
+    selectInput("countryinput2", label = "Select Country A:", choices = c(Choose='', as.character(country2)), selectize = FALSE)
   }) 
   
   
@@ -293,20 +294,28 @@ shinyServer(function(input, output, session) {
   # Get country1 screen data
   screencountry1Data <-eventReactive(input$query1,{
     # Get Deta
-    abc = input$countryinput1
+    xyz = input$countryinput1
+    matchesCountry1 = matches[matches$country1==xyz,]
+    matchesCountry1 = matchesCountry1$year
     
-    count1 <- ddply(matches, .(abc, matches$year), nrow)
-    names(count1) <- c("country", "year", "Freq")
+    count1 = count(matchesCountry1)
+    
+    colnames(count1) <- c( "year", "Freq")
+    count1$country <- rep(xyz,nrow(count1))
     return(count1)
   }, ignoreNULL = FALSE)
   
+  
   # Get country2 screen data
   screencountry2Data <-eventReactive(input$query1, {
-    # Get Deta
+    in2 = input$countryinput2
+    matchesCountry2 = matches[matches$country1==in2,]
+    matchesCountry2 = matchesCountry2$year
     
-    country2 = input$countryinput2
-    count2 <- ddply(matches, .(country2, matches$year), nrow)
-    names(count2) <- c("country", "year", "Freq")
+    count2 = count(matchesCountry2)
+    
+    colnames(count2) <- c( "year", "Freq")
+    count2$country <- rep(in2,nrow(count2))
     return(count2)
   }, ignoreNULL = FALSE)
   
@@ -595,18 +604,9 @@ shinyServer(function(input, output, session) {
       
       d1 = screencountry1Data()
       d2 = screencountry2Data()
-      
-      xyz = input$countryinput1
-      matchesCountry1 = matches[matches$country1==xyz,]
-      matchesCountry1 = matchesCountry1$year
-      
-      count2 = count(matchesCountry1)
-      
-      colnames(count2) <- c( "year", "Freq")
-      
-      
       # Subset into top results
-      p <- nPlot(Freq ~ year,  type = 'lineChart', id = 'chart',dom = "winbyyear", data = count2)
+      d = rbind(d1,d2)
+      p <- nPlot(Freq ~ year, group = 'country', type = 'stackedAreaChart', id = 'chart', dom = "winbyyear", data = d)
       
       return(p)
     })

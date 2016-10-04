@@ -143,7 +143,7 @@ dashboardPage(skin = "green",
                             
                             column(width = 12,
                                    box(
-                                     title = "Query Builder",
+                                     title = "Compare Two Countries",
                                      width = 12,
                                      status = "primary",
                                      solidHeader = TRUE,
