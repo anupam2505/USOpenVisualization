@@ -1,4 +1,3 @@
-# shinyHome
 # Real Estate Analytics and Forecasting
 # John James
 # Date: June 27, 2016
@@ -291,8 +290,8 @@ shinyServer(function(input, output, session) {
   
   
   
-  # Get country1 screen data
-  screencountry1Data <-eventReactive(input$query1,{
+  # Get country1 win data
+  screencountry1winData <-eventReactive(input$query1,{
     # Get Deta
     xyz = input$countryinput1
     matchesCountry1 = matches[matches$country1==xyz,]
@@ -306,8 +305,8 @@ shinyServer(function(input, output, session) {
   }, ignoreNULL = FALSE)
   
   
-  # Get country2 screen data
-  screencountry2Data <-eventReactive(input$query1, {
+  # Get country2 win data
+  screencountry2winData <-eventReactive(input$query1, {
     in2 = input$countryinput2
     matchesCountry2 = matches[matches$country1==in2,]
     matchesCountry2 = matchesCountry2$year
@@ -318,6 +317,39 @@ shinyServer(function(input, output, session) {
     count2$country <- rep(in2,nrow(count2))
     return(count2)
   }, ignoreNULL = FALSE)
+  
+  
+  ## Loss Data
+  
+  # Get country1 loss data
+  screencountry1lossData <-eventReactive(input$query1,{
+    # Get Deta
+    xyz = input$countryinput1
+    matchesCountry1 = matches[matches$country2==xyz,]
+    matchesCountry1 = matchesCountry1$year
+    
+    count1 = count(matchesCountry1)
+    
+    colnames(count1) <- c( "year", "Freq")
+    count1$country <- rep(xyz,nrow(count1))
+    return(count1)
+  }, ignoreNULL = FALSE)
+  
+  
+  # Get country2 loss data
+  screencountry2lossData <-eventReactive(input$query1, {
+    in2 = input$countryinput2
+    matchesCountry2 = matches[matches$country2==in2,]
+    matchesCountry2 = matchesCountry2$year
+    
+    count2 = count(matchesCountry2)
+    
+    colnames(count2) <- c( "year", "Freq")
+    count2$country <- rep(in2,nrow(count2))
+    return(count2)
+  }, ignoreNULL = FALSE)
+  
+  
   
   
   
@@ -596,18 +628,34 @@ shinyServer(function(input, output, session) {
     return(m)
   }
   
+  ## Loss over years
+  output$lossbyyear <- renderChart({
+    
+    withProgress(message = "Rendering number of losses over years", {
+      
+      d1 = screencountry1lossData()
+      d2 = screencountry2lossData()
+      # Subset into top results
+      d = rbind(d1,d2)
+      p <- nPlot(Freq ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "lossbyyear", data = d, height = 400, width = 550)
+      p$chart(color = c('blue', 'red'))
+      
+      return(p)
+    })
+  })
   
   
+  ##win over years
   output$winbyyear <- renderChart({
     
     withProgress(message = "Rendering number of wins over years", {
       
-      d1 = screencountry1Data()
-      d2 = screencountry2Data()
+      d1 = screencountry1winData()
+      d2 = screencountry2winData()
       # Subset into top results
       d = rbind(d1,d2)
-      p <- nPlot(Freq ~ year, group = 'country', type = 'stackedAreaChart', id = 'chart', dom = "winbyyear", data = d)
-      
+      p <- nPlot(Freq ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "winbyyear", data = d, height = 400, width = 550)
+      p$chart(color = c('blue', 'red'))
       return(p)
     })
   })
@@ -655,6 +703,23 @@ shinyServer(function(input, output, session) {
       return(p)
     })
   })
+  
+  
+  
+  # Render Market Data Table
+  output$top3tableA <- renderDataTable({
+    
+    withProgress(message = "Rendering Country A Table", {
+      d <- getGrowthData()
+    })
+    
+    #Drop location variable
+    d$location <- NULL 
+    return(d)
+  }, options = list(lengthMenu = c(5, 30, 50), autowidth = TRUE, pageLength = 5))
+  
+  
+  
   
   
   # Render Market Data Table

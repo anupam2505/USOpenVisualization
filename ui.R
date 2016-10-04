@@ -155,21 +155,51 @@ dashboardPage(skin = "green",
                                    
                                    conditionalPanel(
                                      condition = "input.query1",
+                                     fluidRow(
                                      column(width = 12,
-                                            
+                                                box(
+                                                  title = paste("Matches Won over years"),
+                                                  status = "primary",
+                                                  width = 6,
+                                                  solidHeader = FALSE,
+                                                  collapsible = TRUE,
+                                                  showOutput("winbyyear", "nvd3")
+                                                  
+                                                ),
                                             box(
-                                              title = "Wins VS Year",
+                                              title = paste("Matches Lost over years"),
                                               status = "primary",
-                                              width = 12,
+                                              width = 6,
                                               solidHeader = FALSE,
                                               collapsible = TRUE,
+                                              showOutput("lossbyyear", "nvd3")
                                               
-                                              showOutput("winbyyear", "nvd3")
                                             )
-                                     )
+                                   ),
+                                   column(width = 12,
+                                          box(
+                                            title = "Top 3 Player Country A",
+                                            status = "primary",
+                                            width = 6,
+                                            solidHeader = FALSE,
+                                            collapsible = TRUE,
+                                            dataTableOutput("top3tableA")
+                                          ),
+                                          box(
+                                            title = "Top 3 Player Country B",
+                                            status = "primary",
+                                            width = 6,
+                                            solidHeader = FALSE,
+                                            collapsible = TRUE,
+                                            dataTableOutput("top3tableB")
+                                          )
+                                          
+                                          )
                                    )
-                                   
                             )
+                            )
+                            
+                           
                             
                             
                             
