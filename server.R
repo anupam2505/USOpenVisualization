@@ -291,24 +291,24 @@ shinyServer(function(input, output, session) {
   
   
   # Get country1 screen data
-  screencountry1Data <-function() {
+  screencountry1Data <-eventReactive(input$query1,{
     # Get Deta
     abc = input$countryinput1
     
     count1 <- ddply(matches, .(abc, matches$year), nrow)
     names(count1) <- c("country", "year", "Freq")
     return(count1)
-  }
+  }, ignoreNULL = FALSE)
   
   # Get country2 screen data
-  screencountry2Data <-function() {
+  screencountry2Data <-eventReactive(input$query1, {
     # Get Deta
     
     country2 = input$countryinput2
     count2 <- ddply(matches, .(country2, matches$year), nrow)
     names(count2) <- c("country", "year", "Freq")
     return(count2)
-  }
+  }, ignoreNULL = FALSE)
   
   
   
@@ -596,10 +596,17 @@ shinyServer(function(input, output, session) {
       d1 = screencountry1Data()
       d2 = screencountry2Data()
       
+      xyz = input$countryinput1
+      matchesCountry1 = matches[matches$country1==xyz,]
+      matchesCountry1 = matchesCountry1$year
+      
+      count2 = count(matchesCountry1)
+      
+      colnames(count2) <- c( "year", "Freq")
       
       
       # Subset into top results
-      p <- nPlot(Freq ~ year,  type = 'lineChart', id = 'chart',dom = "winbyyear", data = d1)
+      p <- nPlot(Freq ~ year,  type = 'lineChart', id = 'chart',dom = "winbyyear", data = count2)
       
       return(p)
     })
