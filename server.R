@@ -697,33 +697,61 @@ shinyServer(function(input, output, session) {
     
     withProgress(message = "Rendering First Average Speed", {
       speed1in = input$countryinput1
-      matchesCountry1 = matches[matches$country1=="USA" | matches$country2=="USA" ,]
+      matchesCountry1 = matches[matches$country1==speed1in  | matches$country2==speed1in  ,]
       matchesCountry1 = cbind(matchesCountry1$year,matchesCountry1$avgFirstServe1 )
       
       matchesCountry1 = na.omit(matchesCountry1)
       matchesCountry1 = aggregate(matchesCountry1[,2], list(matchesCountry1[,1]), mean)
       colnames(matchesCountry1) <- c( "year", "Average_Speed")
-      matchesCountry1$country <- rep("USA",nrow(matchesCountry1))
+      matchesCountry1$country <- rep(speed1in ,nrow(matchesCountry1))
       
       
       speed2in = input$countryinput2
-      matchesCountry2 = matches[matches$country1=="FRA"| matches$country2=="FRA",]
+      matchesCountry2 = matches[matches$country1==speed2in| matches$country2==speed2in,]
       matchesCountry2 = cbind(matchesCountry2$year,matchesCountry2$avgFirstServe1 )
       
       matchesCountry2 = na.omit(matchesCountry2)
       matchesCountry2 = aggregate(matchesCountry2[,2], list(matchesCountry2[,1]), mean)
       colnames(matchesCountry2) <- c( "year", "Average_Speed")
-      matchesCountry2$country <- rep("FRA",nrow(matchesCountry2))
+      matchesCountry2$country <- rep(speed2in,nrow(matchesCountry2))
       
       
-      dFirstServe = rbind(matchesCountry1,matchesCountry2)
-      p <- nPlot(Average_Speed ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "firstspeedbyyear", data = dFirstServe, height = 400, width = 550)
+      dFirstServe = data.frame(rbind(matchesCountry1,matchesCountry2))
+      p <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "firstspeedbyyear", data = dFirstServe, height = 400, width = 550)
       p$chart(color = c('blue', 'red'))
       return(p)
     })
   })
   
-  
+  output$secondspeedbyyear <- renderChart({
+    
+    withProgress(message = "Rendering First Average Speed", {
+      speed1in = input$countryinput1
+      matchesCountry12 = matches[matches$country1==speed1in | matches$country2==speed1in ,]
+      matchesCountry12 = cbind(matchesCountry12$year,matchesCountry12$avgFirstServe2 )
+      
+      matchesCountry12 = na.omit(matchesCountry12)
+      matchesCountry12 = aggregate(matchesCountry12[,2], list(matchesCountry12[,1]), mean)
+      colnames(matchesCountry12) <- c( "year", "Average_Speed")
+      matchesCountry12$country <- rep(speed1in,nrow(matchesCountry12))
+      
+      
+      speed2in = input$countryinput2
+      matchesCountry22 = matches[matches$country1==speed2in| matches$country2==speed2in,]
+      matchesCountry22 = cbind(matchesCountry22$year,matchesCountry22$avgFirstServe2 )
+      
+      matchesCountry22 = na.omit(matchesCountry22)
+      matchesCountry22 = aggregate(matchesCountry22[,2], list(matchesCountry22[,1]), mean)
+      colnames(matchesCountry22) <- c( "year", "Average_Speed")
+      matchesCountry22$country <- rep(speed2in,nrow(matchesCountry22))
+      
+      
+      dFirstServe1 = data.frame(rbind(matchesCountry12,matchesCountry22))
+      p1 <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "secondspeedbyyear", data = dFirstServe1, height = 400, width = 550)
+      p1$chart(color = c('blue', 'red'))
+      return(p1)
+    })
+  })
   
   
   #Render Top Markets by Growth
