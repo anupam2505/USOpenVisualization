@@ -247,7 +247,7 @@ shinyServer(function(input, output, session) {
   output$country2Query4Ui <- renderUI({
     country2 = unique(sort(unique(rbind(matches$country1, matches$country2))))
     # country2 = sort(unique(matches$country2))
-    selectInput("countryinput2", label = "Select Country A:", choices = c(Choose='', as.character(country2)), selectize = FALSE)
+    selectInput("countryinput2", label = "Select Country B:", choices = c(Choose='', as.character(country2)), selectize = FALSE)
   }) 
   
   
@@ -349,6 +349,34 @@ shinyServer(function(input, output, session) {
     return(count2)
   }, ignoreNULL = FALSE)
   
+  
+  # Top 3 for Country A
+  output$top3tableA <- DT::renderDataTable(datatable({
+    inputTop3A = input$countryinput1
+    top3countryA = matches[matches$country1==inputTop3A,]
+    PlayersA = top3countryA$player1
+    countA = count(PlayersA)
+    
+    colnames(countA) <- c( "Player", "Wins")
+    countA = countA[order(-countA[,2]), ]
+    countA$country <- rep(inputTop3A,nrow(countA))
+    countA
+  }, options = list(lengthMenu = c(5,10), autowidth = TRUE, pageLength = 5), rownames = FALSE, style = "default"))
+  
+  
+  
+  # Top 3 for Country B
+  output$top3tableB <- DT::renderDataTable(datatable({
+      inputTop3B = input$countryinput2
+      top3countryB = matches[matches$country1==inputTop3B,]
+      PlayersB = top3countryB$player1
+      countB = count(PlayersB)
+      
+      colnames(countB) <- c( "Player", "Wins")
+      countB = countB[order(-countB[,2]), ]
+      countB$country <- rep(inputTop3B,nrow(countB))
+      countB
+  }, options = list(lengthMenu = c(5,10), autowidth = TRUE, pageLength = 5), rownames = FALSE, style = "default"))
   
   
   
@@ -706,17 +734,6 @@ shinyServer(function(input, output, session) {
   
   
   
-  # Render Market Data Table
-  output$top3tableA <- renderDataTable({
-    
-    withProgress(message = "Rendering Country A Table", {
-      d <- getGrowthData()
-    })
-    
-    #Drop location variable
-    d$location <- NULL 
-    return(d)
-  }, options = list(lengthMenu = c(5, 30, 50), autowidth = TRUE, pageLength = 5))
   
   
   

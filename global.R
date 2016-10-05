@@ -19,6 +19,7 @@ library(TTR)
 library(xlsx)
 library(shinyGlobe)
 library(ggmap)
+library(DT)
 
 ################################################################################
 #                             GLOBAL VARIABLES                                 #

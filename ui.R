@@ -178,20 +178,18 @@ dashboardPage(skin = "green",
                                    ),
                                    column(width = 12,
                                           box(
-                                            title = "Top 3 Player Country A",
-                                            status = "primary",
+                                            title = "Top Players Country A",
                                             width = 6,
                                             solidHeader = FALSE,
                                             collapsible = TRUE,
-                                            dataTableOutput("top3tableA")
+                                            tableOutput("top3tableA")
                                           ),
                                           box(
-                                            title = "Top 3 Player Country B",
-                                            status = "primary",
+                                            title = "Top Players Country B",
                                             width = 6,
                                             solidHeader = FALSE,
                                             collapsible = TRUE,
-                                            dataTableOutput("top3tableB")
+                                            DT::dataTableOutput("top3tableB")
                                           )
                                           
                                           )
