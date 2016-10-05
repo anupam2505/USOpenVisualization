@@ -156,7 +156,12 @@ dashboardPage(skin = "green",
                                    conditionalPanel(
                                      condition = "input.query1",
                                      column(width = 12,
-                                     
+                                            box(
+                                              title = "Data",
+                                              status = "primary",
+                                              width = 12,
+                                              solidHeader = TRUE,
+                                              collapsible = TRUE,
                                      fluidRow(
                                      column(width = 12,
                                                 box(
@@ -178,178 +183,46 @@ dashboardPage(skin = "green",
                                               
                                             )
                                    )
-                                     )
-                                   ,
-                                   fluidRow(
-                                   column(width = 12,
-                                          box(
-                                            title = "Top Players Country A",
-                                            status = "primary",
-                                            width = 6,
-                                            solidHeader = FALSE,
-                                            collapsible = TRUE,
-                                            tableOutput("top3tableA")
-                                          ),
-                                          box(
-                                            title = "Top Players Country B",
-                                            status = "primary",
-                                            width = 6,
-                                            solidHeader = FALSE,
-                                            collapsible = TRUE,
-                                            DT::dataTableOutput("top3tableB")
-                                          )
-                                          
-                                          )
-                                   ),
+                                     ),
                                    fluidRow(
                                      column(width = 12,
-                                            box(
-                                              
-                                            )
+                                     box(
+                                       title = paste("Average First serve speed"),
+                                       status = "primary",
+                                       width = 12,
+                                       solidHeader = FALSE,
+                                       collapsible = TRUE,
+                                       showOutput("firstspeedbyyear", "nvd3")
+                                     )
                                    )
+                                   )
+#                                    ,
+#                                    fluidRow(
+#                                    column(width = 12,
+#                                           box(
+#                                             title = "Top Players Country A",
+#                                             status = "primary",
+#                                             width = 6,
+#                                             solidHeader = FALSE,
+#                                             collapsible = TRUE,
+#                                             tableOutput("top3tableA")
+#                                           ),
+#                                           box(
+#                                             title = "Top Players Country B",
+#                                             status = "primary",
+#                                             width = 6,
+#                                             solidHeader = FALSE,
+#                                             collapsible = TRUE,
+#                                             DT::dataTableOutput("top3tableB")
+#                                           )
+#                                           
+#                                           )
+#                                    )
                                      )
                                    )
                             )
                             
-                  
-                  
-                            
-                            
-                            
-#                             column(width = 2,
-#                                    box(
-#                                      title = "Query Builder",
-#                                      status = "primary",
-#                                      width = 12,
-#                                      solidHeader = TRUE,
-#                                      background = "navy",
-#                                      box(
-#                                        width = 12,
-#                                        status = "primary",
-#                                        solidHeader = FALSE,
-#                                        background = "navy",
-#                                        uiOutput("levelQueryUi")
-#                                      ),# end of box
-#                                      conditionalPanel(
-#                                        condition = "input.analysisLevel == 2",
-#                                        box(
-#                                          status = "primary",
-#                                          solidHeader = FALSE,
-#                                          width = 12,
-#                                          background = "navy",
-#                                          uiOutput("stateQuery2Ui")
-#                                        )# end of box
-#                                      ),# end of conditional panel  
-#                                      conditionalPanel(
-#                                        condition = "input.analysisLevel == 3",
-#                                        box(
-#                                          status = "primary",
-#                                          solidHeader = FALSE,
-#                                          width = 12,
-#                                          background = "navy",
-#                                          uiOutput("stateQuery3Ui"),
-#                                          uiOutput("countyQuery3Ui")
-#                                        )# end of box
-#                                      ),# end of conditionalpanel    
-#                                      conditionalPanel(
-#                                        condition = "input.analysisLevel == 4",
-#                                        box(
-#                                          status = "primary",
-#                                          solidHeader = FALSE,
-#                                          width = 12,
-#                                          background = "navy",
-#                                          uiOutput("stateQuery4Ui"),
-#                                          uiOutput("countyQuery4Ui"),
-#                                          uiOutput("cityQuery4Ui")
-#                                        )# end of box
-#                                      ),# end of conditionalpanel
-#                                      box(
-#                                        status = "primary",
-#                                        solidHeader = FALSE,
-#                                        width = 12,
-#                                        background = "navy",
-#                                        sliderInput("hviQuery", label = "Home Value Range ($000)", min = 0, max = 2000, value = c(0,1000)),
-#                                        checkboxInput("maxValue", label = "Include all values exceeding $2m", value = FALSE)
-#                                      ), # end of box
-#                                      box(
-#                                        status = "primary",
-#                                        solidHeader = FALSE,
-#                                        width = 12,
-#                                        background = "navy",
-#                                        selectInput("horizon", label = "Time Horizon:", 
-#                                                    choices = c("Monthly", "Quarterly", "Annual", "5 Year", "10 Year"),
-#                                                    selected = "Annual",
-#                                                    selectize = FALSE),
-#                                        numericInput("minGrowth", label = "Minimum Growth Rate (%)", value = 1)
-#                                      ),# end of box
-#                                      actionButton("query", label = "Go") 
-#                                    )# end of box
-#                             ),# end of column
-#                             conditionalPanel(
-#                               condition = "input.query",
-#                               column(width = 10,
-#                                      box(
-#                                        title = "Market Data",
-#                                        status = "primary",
-#                                        width = 12,
-#                                        solidHeader = TRUE,
-#                                        collapsible = TRUE,
-#                                        fluidRow(
-#                                          box(
-#                                            title = "Wins VS Year",
-#                                            status = "primary",
-#                                            width = 12,
-#                                            solidHeader = FALSE,
-#                                            collapsible = TRUE,
-#                                            
-#                                            showOutput("winbyyear", "nvd3")
-#                                          )# end of box
-#                                        ),# end of fluidrow
-#                                        fluidRow(
-#                                          column(width = 12,
-#                                                 box(
-#                                                   title = "Distribution of Median Home Values",
-#                                                   status = "primary",
-#                                                   width = 6,
-#                                                   solidHeader = FALSE,
-#                                                   collapsible = TRUE,
-#                                                   plotOutput("valueHist")
-#                                                 ),# end of box
-#                                                 box(
-#                                                   title = "Markets Table",
-#                                                   status = "primary",
-#                                                   width = 6,
-#                                                   solidHeader = FALSE,
-#                                                   collapsible = TRUE,
-#                                                   dataTableOutput("marketTbl")
-#                                                 )# end of box
-#                                          ),# end of column
-#                                          column(width = 12,
-#                                                 box(
-#                                                   title = "Top Markets by Growth",
-#                                                   status = "primary",
-#                                                   width = 12,
-#                                                   height = 400,
-#                                                   solidHeader = FALSE,
-#                                                   collapsible = TRUE,
-#                                                   showOutput("topByGrowth", "nvd3")
-#                                                 )# end of box
-#                                          )# end of column
-#                                        ),# end of fluidRow
-#                                        fluidRow(
-#                                          box(
-#                                            title = "Median Home Value Time Series for Top Growth Markets",
-#                                            status = "primary",
-#                                            width = 12,
-#                                            height = 700,
-#                                            solidHeader = FALSE,
-#                                            collapsible = TRUE,
-#                                            showOutput("topMarketsTS", "nvd3")
-#                                          ) #End of Box
-#                                        )# end of fluidrow
-#                                      )# end of box
-#                               )#end of column
-#                             ) # end of conditionalpanel
+                            )
                           ) # End of fluidPage
                   ), # End of tabItem 
                   tabItem(tabName = "valueAnalysis",
