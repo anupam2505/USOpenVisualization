@@ -155,6 +155,8 @@ dashboardPage(skin = "green",
                                    
                                    conditionalPanel(
                                      condition = "input.query1",
+                                     column(width = 12,
+                                     
                                      fluidRow(
                                      column(width = 12,
                                                 box(
@@ -175,10 +177,14 @@ dashboardPage(skin = "green",
                                               showOutput("lossbyyear", "nvd3")
                                               
                                             )
-                                   ),
+                                   )
+                                     )
+                                   ,
+                                   fluidRow(
                                    column(width = 12,
                                           box(
                                             title = "Top Players Country A",
+                                            status = "primary",
                                             width = 6,
                                             solidHeader = FALSE,
                                             collapsible = TRUE,
@@ -186,6 +192,7 @@ dashboardPage(skin = "green",
                                           ),
                                           box(
                                             title = "Top Players Country B",
+                                            status = "primary",
                                             width = 6,
                                             solidHeader = FALSE,
                                             collapsible = TRUE,
@@ -193,11 +200,19 @@ dashboardPage(skin = "green",
                                           )
                                           
                                           )
+                                   ),
+                                   fluidRow(
+                                     column(width = 12,
+                                            box(
+                                              
+                                            )
+                                   )
+                                     )
                                    )
                             )
-                            )
                             
-                           
+                  
+                  
                             
                             
                             

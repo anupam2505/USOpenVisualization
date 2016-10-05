@@ -352,15 +352,19 @@ shinyServer(function(input, output, session) {
   
   # Top 3 for Country A
   output$top3tableA <- DT::renderDataTable(datatable({
-    inputTop3A = input$countryinput1
-    top3countryA = matches[matches$country1==inputTop3A,]
-    PlayersA = top3countryA$player1
-    countA = count(PlayersA)
+      inputTop3A = input$countryinput1
+      top3countryA = matches[matches$country1==inputTop3A,]
+      PlayersA = top3countryA$player1
+      countA = count(PlayersA)
+      
+      colnames(countA) <- c( "Player", "Wins")
+      countA = countA[order(-countA[,2]), ]
+      countA$country <- rep(inputTop3A,nrow(countA))
     
-    colnames(countA) <- c( "Player", "Wins")
-    countA = countA[order(-countA[,2]), ]
-    countA$country <- rep(inputTop3A,nrow(countA))
-    countA
+    
+    
+    
+    return(countA)
   }, options = list(lengthMenu = c(5,10), autowidth = TRUE, pageLength = 5), rownames = FALSE, style = "default"))
   
   
