@@ -4,7 +4,7 @@ dashboardPage(skin = "green",
               dashboardSidebar(
                 sidebarMenu(id = "sbm",
                             menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-                            menuItem("Market Explorer", tabName = "explorer", icon = icon("search")),
+                            menuItem("Explorer", tabName = "explorer", icon = icon("search")),
                             conditionalPanel(
                               condition = "input.sbm == 'valueAnalysis' || input.sbm == 'trainModels' || input.sbm == 'compareModels' || input.sbm == 'forecast'",
                               uiOutput("stateUi"),
@@ -58,28 +58,13 @@ dashboardPage(skin = "green",
                                        solidHeader = FALSE,
                                        collapsible = FALSE,
                                        collapsed = FALSE,
-                                       h3("Welcome to shinyHome"),
+                                       h3("Welcome to US Open Analytics"),
                                        p(
-                                         paste("Here, we use statistical inference and forecast modeling techniques to 
-                                               explore and forecast over 13,000 real estate markets in the United States.  
-                                               This tool will enable you to:")),
+                                         paste("Here, we will discuss the different comarisons on 11 year US Open data:")),
                                        tags$ul(
-                                         tags$li("get a snapshot and timeseries of the states and cities with the highest annual increase in median home values
-                                                 on this", span("Dashboard page,", style = "color:white")),
-                                         tags$li("explore home price indices and growth rates across various markets at several levels of granularity in 
-                                                 the", span("Market Explorer,", style = "color:white")),
-                                         tags$li("select a market and analyze and decompose price movements into their seasonal, trend and irregular components in the"
-                                                 , span("Value Analyzer,", style = "color:white")),
-                                         tags$li("train the most popular forecasting models and compare predictive accuracies in the", span("Forecast Modeler,", style = "color:white"), "and"),
-                                         tags$li("use these models to forecast home prices in virtually every US real estate market in the", span("Market Forecaster.", 
-                                                                                                                                                  style = "color:white"))
+                                         tags$li("Analytics realted to all countries", span("Dashboard page,", style = "color:white")),
+                                         tags$li("Ccomparison between two countries.", span("Explorer,", style = "color:white"))
                                          ),
-                                       p(
-                                         paste("The menus to the left will walk you through the process of exploring markets, reviewing price trends, training 
-                                               forecast models, evaluating model performance accuracy and predict home prices, 3, 5 or 10 years out.")),
-                                       p(
-                                         paste("To get started, click on the Market Explorer menu on the left.  For help, click on the help tab on 
-                                               the sidebar panel.")),
                                        p("Enjoy!")
                                          )# end of box
                                        ),# end of column
@@ -93,16 +78,7 @@ dashboardPage(skin = "green",
                                        collapsible = TRUE,
                                        globeOutput("globe")
                                      )
-                                     # ,
-                                     # box(
-                                     #   title = "Top 10 Cities by Annual Home Value Growth",
-                                     #   status = "primary",
-                                     #   width = 12,
-                                     #   height = 255,
-                                     #   solidHeader = FALSE,
-                                     #   collapsible = TRUE,
-                                     #   showOutput("top10CitiesBar", "nvd3")
-                                     # ) #End of Box
+                                    
                               ) # End of column
                                      ), # End of Fluid Row
                             fluidRow(
@@ -126,15 +102,7 @@ dashboardPage(skin = "green",
                                        showOutput("top10CitiesTS", "nvd3")
                                      ) #End of Box
                               )# end of column
-                            ),#end of fluidrow
-                            fluidRow(
-                              column(width = 12,
-                                     valueBoxOutput("numStatesBox", width = 3),
-                                     valueBoxOutput("numCountiesBox", width = 3),
-                                     valueBoxOutput("numCitiesBox", width = 3),
-                                     valueBoxOutput("numZipsBox", width = 3)
-                              )# end of column
-                            )# end of fluidrow
+                            )
                             ) # End of fluidPage
                   ), # End of tabItem
                   tabItem(tabName = "explorer",
@@ -151,7 +119,7 @@ dashboardPage(skin = "green",
                                      uiOutput("country1Query4Ui"),
                                      uiOutput("country2Query4Ui"),
                                      actionButton("query1", label = "Go")
-                                      ),
+                                   ),
                                    
                                    conditionalPanel(
                                      condition = "input.query1",
@@ -162,66 +130,74 @@ dashboardPage(skin = "green",
                                               width = 12,
                                               solidHeader = TRUE,
                                               collapsible = TRUE,
-                                     fluidRow(
-                                     column(width = 12,
+                                              fluidRow(
+                                                column(width = 12,
+                                                       box(
+                                                         title = paste("Matches Won over years"),
+                                                         status = "primary",
+                                                         width = 6,
+                                                         solidHeader = FALSE,
+                                                         collapsible = TRUE,
+                                                         showOutput("winbyyear", "nvd3")
+                                                         
+                                                       ),
+                                                       box(
+                                                         title = paste("Matches Lost over years"),
+                                                         status = "primary",
+                                                         width = 6,
+                                                         solidHeader = FALSE,
+                                                         collapsible = TRUE,
+                                                         showOutput("lossbyyear", "nvd3")
+                                                         
+                                                       )
+                                                )
+                                              ) ,
+                                              fluidRow(
+                                                column(width = 12,
                                                 box(
-                                                  title = paste("Matches Won over years"),
+                                                  title = paste("Average First serve speed"),
                                                   status = "primary",
                                                   width = 6,
                                                   solidHeader = FALSE,
                                                   collapsible = TRUE,
-                                                  showOutput("winbyyear", "nvd3")
-                                                  
+                                                  showOutput("firstspeedbyyear", "nvd3")
                                                 ),
-                                            box(
-                                              title = paste("Matches Lost over years"),
-                                              status = "primary",
-                                              width = 6,
-                                              solidHeader = FALSE,
-                                              collapsible = TRUE,
-                                              showOutput("lossbyyear", "nvd3")
-                                              
+                                                box(
+                                                  title = paste("Average Second serve speed"),
+                                                  status = "primary",
+                                                  width = 6,
+                                                  solidHeader = FALSE,
+                                                  collapsible = TRUE,
+                                                  showOutput("secondspeedbyyear", "nvd3")
+                                                )
+                                                )
+                                              )
+                                              ,
+                                              fluidRow(
+                                                column(width = 12,
+                                                       box(
+                                                         title = "Top Players Country A",
+                                                         status = "primary",
+                                                         width = 6,
+                                                         solidHeader = FALSE,
+                                                         collapsible = TRUE,
+                                                         tableOutput("top3tableA")
+                                                       ),
+                                                       box(
+                                                         title = "Top Players Country B",
+                                                         status = "primary",
+                                                         width = 6,
+                                                         solidHeader = FALSE,
+                                                         collapsible = TRUE,
+                                                         DT::dataTableOutput("top3tableB")
+                                                       )
+                                                       
+                                                )
+                                              )
                                             )
-                                   )
-                                     ),
-                                   fluidRow(
-                                     column(width = 12,
-                                     box(
-                                       title = paste("Average First serve speed"),
-                                       status = "primary",
-                                       width = 12,
-                                       solidHeader = FALSE,
-                                       collapsible = TRUE,
-                                       showOutput("firstspeedbyyear", "nvd3")
                                      )
+                                     
                                    )
-                                   )
-#                                    ,
-#                                    fluidRow(
-#                                    column(width = 12,
-#                                           box(
-#                                             title = "Top Players Country A",
-#                                             status = "primary",
-#                                             width = 6,
-#                                             solidHeader = FALSE,
-#                                             collapsible = TRUE,
-#                                             tableOutput("top3tableA")
-#                                           ),
-#                                           box(
-#                                             title = "Top Players Country B",
-#                                             status = "primary",
-#                                             width = 6,
-#                                             solidHeader = FALSE,
-#                                             collapsible = TRUE,
-#                                             DT::dataTableOutput("top3tableB")
-#                                           )
-#                                           
-#                                           )
-#                                    )
-                                     )
-                                   )
-                            )
-                            
                             )
                           ) # End of fluidPage
                   ), # End of tabItem 

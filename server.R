@@ -717,7 +717,7 @@ shinyServer(function(input, output, session) {
       
       
       dFirstServe = rbind(matchesCountry1,matchesCountry2)
-      p <- nPlot(Average_Speed ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "winbyyear", data = dFirstServe, height = 400, width = 550)
+      p <- nPlot(Average_Speed ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "firstspeedbyyear", data = dFirstServe, height = 400, width = 550)
       p$chart(color = c('blue', 'red'))
       return(p)
     })
