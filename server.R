@@ -719,8 +719,9 @@ shinyServer(function(input, output, session) {
       dFirstServe = data.frame(rbind(matchesCountry1,matchesCountry2))
       p <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "firstspeedbyyear", data = dFirstServe, height = 400, width = 550)
       p$chart(color = c('blue', 'red'))
-      return(p)
+      
     })
+    p
   })
   
   output$secondspeedbyyear <- renderChart({
@@ -749,8 +750,9 @@ shinyServer(function(input, output, session) {
       dFirstServe1 = data.frame(rbind(matchesCountry12,matchesCountry22))
       p1 <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "secondspeedbyyear", data = dFirstServe1, height = 400, width = 550)
       p1$chart(color = c('blue', 'red'))
-      return(p1)
+     
     })
+    p1
   })
   
   

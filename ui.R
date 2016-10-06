@@ -194,6 +194,27 @@ dashboardPage(skin = "green",
                                                        
                                                 )
                                               )
+#                                               ,
+#                                               fluidRow(
+#                                                 column(width = 12,
+#                                                        box(
+#                                                          title = paste("Average Error over years"),
+#                                                          status = "primary",
+#                                                          width = 6,
+#                                                          solidHeader = FALSE,
+#                                                          collapsible = TRUE,
+#                                                          showOutput("averageError", "nvd3")
+#                                                        ),
+#                                                        box(
+#                                                          title = paste("Average Net Points Won over years"),
+#                                                          status = "primary",
+#                                                          width = 6,
+#                                                          solidHeader = FALSE,
+#                                                          collapsible = TRUE,
+#                                                          showOutput("averagenet", "nvd3")
+#                                                        )
+#                                                 )
+#                                               )
                                             )
                                      )
                                      
