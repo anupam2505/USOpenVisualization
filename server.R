@@ -1,6 +1,6 @@
-# Real Estate Analytics and Forecasting
-# John James
-# Date: June 27, 2016
+# Assignment 2 
+# Anupam Panwar
+# Date: Oct 1, 2016
 
 # server.R
 
