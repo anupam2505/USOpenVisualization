@@ -22,7 +22,7 @@ for (i in 1:nrow(table1)){
 
 
 Population1 = data.frame(table1$x, table1$Latitude, table1$Longitude, as.numeric(table1$Population))
-colnames(Population1) = c("Country","Latitude", "Longitude", "Match_Played")
+colnames(Population1) = c("Country","Latitude", "Longitude", "Matches_Played")
 Population1[1,2] = as.numeric(-63.61667)
 Population1[1,2] = as.numeric(-38.4161)
 

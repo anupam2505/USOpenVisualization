@@ -47,7 +47,7 @@ shinyServer(function(input, output, session) {
   # Map Homepage
   output$gvis <- renderGvis({
     polygons.plot <- as.data.frame(population)
-    gvisGeoChart(polygons.plot, locationvar= "Country", colorvar ="Match_Played",options=list( title="Matches played by countries over the years",colors="['Blue', 'red']"))  
+    gvisGeoChart(polygons.plot, locationvar= "Country", colorvar ="Matches_Played",options=list( title="Matches played by countries over the years",colors="['Blue', 'red']"))  
   })
   
   #
@@ -56,14 +56,24 @@ shinyServer(function(input, output, session) {
     top10 = matches
     PlayersAll = top10$player1
     m1 = count(PlayersAll)
-    
-    
-    
     colnames(m1) <- c( "Player",   "Wins")
     m1 = m1[order(-m1[,2]), ]
     gvisTable(m1,options=list(page='enable', pageSize=15, width=550))
   }) 
   
+  ## Better servers
+  output$topserverCountries <- renderGvis({
+    topserver <- matches
+    topserver$SPS1 <- topserver$ace1-topserver$double1
+    topserver$SPS2 <- topserver$ace2-topserver$double2
+    m1 <- aggregate( SPS1 ~ country1, topserver, mean )
+    colnames(m1) <- c("Country", "SPS-Serve-Precision-Score")
+    m2 <- aggregate( SPS2 ~ country2, topserver, mean )
+    colnames(m2) <- c("Country", "SPS-Serve-Precision-Score")
+    m <- rbind(m1,m2)
+    finalm <- aggregate( SPS ~ SPS-Serve-Precision-Score, m, mean )
+    
+  })
  
   ## Select Country 1
   output$country1Query4Ui <- renderUI({
