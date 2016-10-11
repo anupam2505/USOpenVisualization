@@ -51,7 +51,7 @@ shinyServer(function(input, output, session) {
   })
   
   #
-  ## Top 10 countries
+  ## Top 10 Players
   output$top10 <- renderGvis({
     top10 = matches
     PlayersAll = top10$player1
@@ -61,25 +61,40 @@ shinyServer(function(input, output, session) {
     gvisTable(m1,options=list(page='enable', pageSize=15, width=550))
   }) 
   
-  ## Better servers
+  ## Better servers countries
   output$topserverCountries <- renderGvis({
     topserver <- matches
     topserver$SPS1 <- topserver$ace1-topserver$double1
     topserver$SPS2 <- topserver$ace2-topserver$double2
     m1 <- aggregate( SPS1 ~ country1, topserver, mean )
-    colnames(m1) <- c("Country", "SPS-Serve-Precision-Score")
+    colnames(m1) <- c("Country", "SPS")
     m2 <- aggregate( SPS2 ~ country2, topserver, mean )
-    colnames(m2) <- c("Country", "SPS-Serve-Precision-Score")
+    colnames(m2) <- c("Country", "SPS")
     m <- rbind(m1,m2)
-    finalm <- aggregate( SPS ~ SPS-Serve-Precision-Score, m, mean )
+    finalm <- aggregate( SPS ~ Country, m, mean )
+    finalm$Country <- countrycode(finalm$Country, "iso3c", "country.name")
     finalm <- as.data.frame(finalm)
-    gvisGeoChart(finalm, locationvar= "Country", colorvar ="SPS-Serve-Precision-Score",options=list( title="SPS (Serve Precision Score = Average Aces by country - Average double faults by country )",colors="['Blue', 'red']"))  
-    
+    gvisGeoChart(finalm, locationvar= "Country", colorvar ="SPS",options=list( title="Serve Precision Score(SPS) = Average Aces by country - Average double faults by country",colors="['Blue', 'red']"))  
   })
+  
+  ## Top 10 Players based on SPS
+  output$top10SPS <- renderGvis({
+    topserve <- matches
+    topserve$SPS1 <- topserve$ace1-topserve$double1
+    topserve$SPS2 <- topserve$ace2-topserve$double2
+    
+    ms1 <- aggregate( SPS1 ~ player1, topserve, sum )
+    colnames(ms1) <- c("Player", "SPS")
+    ms2 <- aggregate( SPS2 ~ player2, topserve, sum )
+    colnames(ms2) <- c("Player", "SPS")
+    ms <- rbind(ms1,ms2)
+    finalm <- aggregate( SPS ~ Player, ms, mean )
+    
+    gvisTable(ms,options=list(page='enable', pageSize=15, width=550))
+  }) 
  
   ## Select Country 1
   output$country1Query4Ui <- renderUI({
-    
     country1 = unique(sort(unique(rbind(matches$country1, matches$country2))))
     # country1 = sort(unique(matches$country1))
     selectInput("countryinput1", label = "Select Country A:", choices = c(Choose='', as.character(country1)), selectize = FALSE)

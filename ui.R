@@ -75,7 +75,7 @@ dashboardPage(skin = "green",
                             fluidRow(
                               column(width = 12,
                                      box(
-                                       title = "SPS (Serve Precision Score = Average Aces by country - Average double faults by country )",
+                                       title = "Serve Precision Score(SPS) = Average Aces by country - Average double faults by country",
                                        status = "primary",
                                        width = 7,
                                        height = 450,
@@ -86,12 +86,13 @@ dashboardPage(skin = "green",
                               # end of column
                             
                                      box(
-                                       title = "Top 10 Cities by Annual Home Value Growth Time Series",
+                                       title = "Top Players based on SPS (Average Aces - Average double faults)",
                                        status = "primary",
-                                       width = 12,
+                                       width = 5,
+                                       height = 450,
                                        solidHeader = FALSE,
                                        collapsible = TRUE,
-                                       showOutput("top10CitiesTS", "nvd3")
+                                       htmlOutput("top10SPS")
                                      ) #End of Box
                              
                             )
