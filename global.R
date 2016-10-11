@@ -20,7 +20,8 @@ library(xlsx)
 library(shinyGlobe)
 library(ggmap)
 library(DT)
-
+library(googleVis)
+library(countrycode)
 ################################################################################
 #                             GLOBAL VARIABLES                                 #
 ################################################################################
