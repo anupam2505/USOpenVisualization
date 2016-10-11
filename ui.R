@@ -73,17 +73,18 @@ dashboardPage(skin = "green",
                               ) # End of column
                                      ), # End of Fluid Row
                             fluidRow(
-                              column(width = 6,
+                              column(width = 12,
                                      box(
-                                       title = "Top 10 States by Annual Home Value Growth Time Series",
+                                       title = "SPS (Serve Precision Score = Average Aces by country - Average double faults by country )",
                                        status = "primary",
-                                       width = 12,
+                                       width = 7,
+                                       height = 450,
                                        solidHeader = FALSE,
                                        collapsible = TRUE,
-                                       showOutput("top10StatesTS", "nvd3")
-                                     ) #End of Box
-                              ),# end of column
-                              column(width = 6,
+                                       htmlOutput("topserverCountries")
+                                     ), #End of Box
+                              # end of column
+                            
                                      box(
                                        title = "Top 10 Cities by Annual Home Value Growth Time Series",
                                        status = "primary",
@@ -92,9 +93,10 @@ dashboardPage(skin = "green",
                                        collapsible = TRUE,
                                        showOutput("top10CitiesTS", "nvd3")
                                      ) #End of Box
-                              )# end of column
+                             
                             )
-                            ) # End of fluidPage
+                            ) # End of fluid row
+                          )
                   ), # End of tabItem
                   tabItem(tabName = "explorer",
                           fluidPage(

@@ -47,7 +47,7 @@ shinyServer(function(input, output, session) {
   # Map Homepage
   output$gvis <- renderGvis({
     polygons.plot <- as.data.frame(population)
-    gvisGeoChart(polygons.plot, locationvar= "Country", colorvar ="Matches_Played",options=list( title="Matches played by countries over the years",colors="['Blue', 'red']"))  
+    gvisGeoChart(polygons.plot, locationvar= "Country", colorvar ="Matches_Played",options=list( title="Matches played by countries in US open",colors="['Blue', 'red']"))  
   })
   
   #
@@ -72,6 +72,8 @@ shinyServer(function(input, output, session) {
     colnames(m2) <- c("Country", "SPS-Serve-Precision-Score")
     m <- rbind(m1,m2)
     finalm <- aggregate( SPS ~ SPS-Serve-Precision-Score, m, mean )
+    finalm <- as.data.frame(finalm)
+    gvisGeoChart(finalm, locationvar= "Country", colorvar ="SPS-Serve-Precision-Score",options=list( title="SPS (Serve Precision Score = Average Aces by country - Average double faults by country )",colors="['Blue', 'red']"))  
     
   })
  
