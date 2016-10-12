@@ -32,19 +32,18 @@ dashboardPage(skin = "green",
                             fluidRow(
                               column(width = 12,
                                      box(
-                                       title = "US Open Analytics",
                                        width = 12,
-                                       height = 250,
+                                       height = 150,
                                        background = "orange",
                                        solidHeader = FALSE,
                                        collapsible = FALSE,
                                        collapsed = FALSE,
                                        h3("Welcome to US Open Analytics"),
                                        p(
-                                         paste("Here, we will discuss the different comarisons on 11 year US Open data:")),
+                                         paste("Here, we will compare different countries:")),
                                        tags$ul(
-                                         tags$li("Analytics realted to all countries on", span("Dashboard page.", style = "color:white")),
-                                         tags$li("Ccomparison between two countries on", span("Explorer page.", style = "color:white"))
+                                         tags$li("Analytics realted to all countries on", span("Dashboard Page.", style = "color:white")),
+                                         tags$li("Comparison between two countries on", span("Explorer Page.", style = "color:white"))
                                          ),
                                        p("Enjoy!")
                                          )# end of box
@@ -210,7 +209,7 @@ dashboardPage(skin = "green",
                                    collapsible = FALSE,
                                    collapsed = FALSE,
                                    
-                                   h2("Country based analysis of US Open"),
+                                   h2("Country based analysis of US Open matches"),
                                    h3("Introduction:"),
                                    h4("Tennis is a famous racket sport that is played individually against a single opponent (singles) 
                                            or between two teams of two players each (doubles). Objective of the game is to play the ball in 
@@ -245,8 +244,8 @@ dashboardPage(skin = "green",
                                       Instead of comparing, user can pick one country as well by unchecking one of the country in the legend. In scatter plot, 
                                       user can magnify the plot by checking the 'Magnify' on the top. This will magnify that part of the chart where user will hover the
                                       cursor.By hovering cursor over the points, user can check the actual values for each year. Google tables at the bottom are showing top players
-                                      for both the countries.At the end of the analysis, I came to the conclusion that Roger Federer is best performing player whereas USA is
-                                      best performing country.")
+                                      for both the countries. At the end of the analysis, I came to the conclusion that Roger Federer is the best performing player whereas USA is
+                                      the best performing country.")
                                      )#end of box
                                      )#end of column
                           
