@@ -200,10 +200,12 @@ dashboardPage(skin = "green",
                           ) # End of fluidPage
                   ), # End of tabItem 
                   tabItem(tabName = "About",
+                          fluidPage(title = "About Project",
                           column(width = 12,
                                  box(
                                    title = "US Open Analytics ",
                                    width = 12,
+                                   height = 1000,
                                    background = "green",
                                    solidHeader = FALSE,
                                    collapsible = FALSE,
@@ -211,40 +213,40 @@ dashboardPage(skin = "green",
                                    
                                    h2("Best Performing Countries in US Open"),
                                    h3("Introduction:"),
-                                   p(
-                                     paste("Tennis is a famous racket sport that is played individually against a single opponent (singles) 
+                                   h4("Tennis is a famous racket sport that is played individually against a single opponent (singles) 
                                            or between two teams of two players each (doubles). Objective of the game is to play the ball in 
                                            such a way that the opponent is not able to play a valid return. Player who is  not nable to return
-                                           the ball will loose the point, while the opposite player will get the point.")),
+                                           the ball will loose the point, while the opposite player will get the point."),
                                    h3("Data Analysis:"),
-                                   p(
-                                     paste("For the data analysis part, I compared different countries on the basis of matches palyed, won or lost over the years.
-                                            I plotted the results on the world map as it make more sense when you are comparing different countries.
+                                   h4("For the data analysis part, I compared different countries on the basis of matches palyed, won or lost over the years in US
+                                            Open.I visualized the results on the world map as it make more sense when you are comparing different countries.
                                             Specifically, for analysing the serve I studied different serve patterns on the last 10 years of US
-                                           Open")),
-                                   tags$strong("Non-Seasonal Home Value Time Series [4]"),
-                                   p(
-                                     paste("A non-seasonal time series consists of a trend component and an irregular component.
-                                           Decomposing the time series involves the separation of the time series into these components,
-                                           that is, estimating the trend component and the irregular component.  Here we show the trend
-                                           component by calculating the simple moving average (SMA) of the time series.")),
-                                   tags$em("Span Order"),
-                                   p(
-                                     paste("To conducted a SMA, you need to specify the order (span) of the simple moving average.
-                                           Using the Span Order slider, select a span order between 1 and 10.  Through trial-and-error,
-                                           you will unveil a smooth SMA showing the trend component without excessive random fluctuation. [1]")),
-                                   tags$strong("Simple Moving Average"),
-                                   p(
-                                     paste("The plot shows an estimate of home value trend with a simple moving average of median home values for the market, from 2000 thru 2015.
-                                           A simple moving average (SMA) is a simple, or arithmetic, moving average that is calculated by adding the
-                                           median home value of homes in the selected market for a number of time periods and then dividing this total
-                                           by the number of time periods. Short-term averages respond quickly to changes in the home values of the underlying,
-                                           while long-term averages are slow to react. [2]"))
+                                           Open matches. After examining further I found that a server can be categorized as good or bad on the basis of two features: 
+                                           Aces and Double Faults.Serve precision score (SPS) was calculated on the basis of these two features. SPS of a player is
+                                           directly proportional to number of aces and indirectly proportional to the number of double faults
+                                           in the match. In terms of linear equation, it can be expressed as:"),
+                                   h4(tags$strong("Serve Precision Score (SPS) = C1* Average no. of aces - C2* Average number of double faults")),
+                                   h4("where C1 and C2 are constants"),
+                                   h4("For the purpose of easiness, we assumed C1=1 and C2=1. I calculated the average SPS score for each country participated
+                                      in the US open in last 11 years. As the part of analysis, I found top player in terms of SPS as well."),
+                                   h3("Story and Visualization:"),
+                                   h4("Dashboard in the web application is showing the matches played by different countries. If you hover on 
+                                      any country in the map, it will show the exact number. On the right side of maps, there are two tables 
+                                      showing the top players in terms of wins and SPS score. Three value boxes on the top showing the total US Open
+                                      matches played, total number of players and total number of countries in last 11 years "),
+                                   h4("Explorer page in web application is showing the comparison between the two countries in terms of wins, losses, average first serve speed, average Second
+                                      serve speed. Explorer is also showing the top players for both countries."),
+                                   h3("Effectiveness:"),
+                                   h4("The main goal of this visualization is to show the number of wins, SPS for each country in map.Since we are also comparing different 
+                                        countries, it is always a good idea to show it on choropleth maps to define the numbers for each country.
+                                        In the same row, I have also showed the top players in term of wins and SPS score. Exact number can be checked by hovering
+                                        over the country. Color maps have values from “Blue” to “Red” so that user can easily identify even small difference in the values of wins and SPS"),
+                                   h4(".")
                                      )#end of box
                                      )#end of column
                           
                                      )#end tabItem
-   
+                  )
           ) # end of tabITems
     )# end of dashboard body
 )# end of dashboard page

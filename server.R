@@ -27,7 +27,7 @@ shinyServer(function(input, output, session) {
   output$highestViBox <- renderValueBox({
     
     current <- matches
-    n1 = nrow(unique(cbind(matches$player1, matches$player2)))
+    n1 = nrow(unique(cbind(unique(matches$player1), unique(matches$player2))))
     current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
       paste0(n1), paste( "Total Number of players "), 
