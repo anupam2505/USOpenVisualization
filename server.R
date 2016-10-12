@@ -83,14 +83,14 @@ shinyServer(function(input, output, session) {
     topserve$SPS1 <- topserve$ace1-topserve$double1
     topserve$SPS2 <- topserve$ace2-topserve$double2
     
-    ms1 <- aggregate( SPS1 ~ player1, topserve, sum )
+    ms1 <- aggregate( SPS1 ~ player1, topserve, mean )
     colnames(ms1) <- c("Player", "SPS")
-    ms2 <- aggregate( SPS2 ~ player2, topserve, sum )
+    ms2 <- aggregate( SPS2 ~ player2, topserve, mean )
     colnames(ms2) <- c("Player", "SPS")
     ms <- rbind(ms1,ms2)
     finalm <- aggregate( SPS ~ Player, ms, mean )
-    
-    gvisTable(ms,options=list(page='enable', pageSize=15, width=550))
+    finalm = finalm[order(-finalm[,2]), ]
+    gvisTable(finalm,options=list(page='enable', pageSize=15, width=550))
   }) 
  
   ## Select Country 1
@@ -204,8 +204,10 @@ shinyServer(function(input, output, session) {
       d2 = screencountry2lossData()
       # Subset into top results
       d = rbind(d1,d2)
-      p <- nPlot(Freq ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "lossbyyear", data = d, height = 400, width = 550)
+      p <- nPlot(Freq ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "lossbyyear", data = d, height = 400, width = 450)
       p$chart(color = c('blue', 'red'))
+      p$yAxis( axisLabel = "Loss" )
+      p$xAxis( axisLabel = "Year" )
       
       return(p)
     })
@@ -221,8 +223,10 @@ shinyServer(function(input, output, session) {
       d2 = screencountry2winData()
       # Subset into top results
       d = rbind(d1,d2)
-      p <- nPlot(Freq ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "winbyyear", data = d, height = 400, width = 550)
+      p <- nPlot(Freq ~ year, group = 'country', type = 'lineChart', id = 'chart', dom = "winbyyear", data = d, height = 400, width = 450)
       p$chart(color = c('blue', 'red'))
+      p$yAxis( axisLabel = "Wins" )
+      p$xAxis( axisLabel = "Year" )
       return(p)
     })
   })
@@ -252,9 +256,10 @@ shinyServer(function(input, output, session) {
       
       
       dFirstServe = data.frame(rbind(matchesCountry1,matchesCountry2))
-      p <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "firstspeedbyyear", data = dFirstServe, height = 400, width = 550)
+      p <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "firstspeedbyyear", data = dFirstServe, height = 400, width = 450)
       p$chart(color = c('blue', 'red'))
-      
+      p$yAxis( axisLabel = "Speed (in KPH)" )
+      p$xAxis( axisLabel = "Year" )
     })
     p
   })
@@ -283,9 +288,10 @@ shinyServer(function(input, output, session) {
       
       
       dFirstServe1 = data.frame(rbind(matchesCountry12,matchesCountry22))
-      p1 <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "secondspeedbyyear", data = dFirstServe1, height = 400, width = 550)
+      p1 <- nPlot(Average_Speed ~ year, group = 'country', type = 'scatterChart', id = 'chart', dom = "secondspeedbyyear", data = dFirstServe1, height = 400, width = 450)
       p1$chart(color = c('blue', 'red'))
-     
+      p1$yAxis( axisLabel = "Speed (in KPH)" )
+      p1$xAxis( axisLabel = "Year" )
     })
     p1
   })
