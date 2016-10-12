@@ -210,18 +210,18 @@ dashboardPage(skin = "green",
                                    collapsible = FALSE,
                                    collapsed = FALSE,
                                    
-                                   h2("Best Performing Countries in US Open"),
+                                   h2("Country based analysis of US Open"),
                                    h3("Introduction:"),
                                    h4("Tennis is a famous racket sport that is played individually against a single opponent (singles) 
                                            or between two teams of two players each (doubles). Objective of the game is to play the ball in 
                                            such a way that the opponent is not able to play a valid return. Player who is  unable to return
-                                           the ball will loose the point, while the opposite player will get the point."),
+                                           the ball will lose the point, while the opposite player will get the point."),
                                    h3("Data Analysis:"),
                                    h4("As part of data analysis, I compared different countries on the basis of matches played, wins or losses over the years in US
-                                            Open.I visualized the results on the world map as it always make more sense when you are comparing different countries.
-                                            Specifically, for analysing the serve I studied different serve patterns on the last 10 years of US
-                                           Open matches. After examining further I found that a server can be categorized as good or bad on the basis of two features: 
-                                           Aces and Double Faults.Serve precision score (SPS) was calculated on the basis of these two features. SPS of a player is
+                                            Open.I visualized the results on the world map as it always makes more sense when you are comparing different countries.
+                                            Specifically, for analyzing the serve I studied different serve patterns on the last 11 years of US
+                                           Open matches. After examining further, I found that a server can be categorized as good or bad on the basis of two features: 
+                                           Aces and Double Faults. Serve precision score (SPS) was calculated on the basis of these two features. SPS of a player is
                                            directly proportional to number of aces and indirectly proportional to the number of double faults
                                            in the match. In terms of linear equation, it can be expressed as:"),
                                    h4(tags$strong("Serve Precision Score (SPS) = C1* Average no. of aces - C2* Average number of double faults")),
@@ -232,20 +232,21 @@ dashboardPage(skin = "green",
                                    h4("Dashboard in web application is showing the matches played by different countries. If you hover on 
                                       any country in the map, it will show the exact number. On the right side of maps, there are two tables 
                                       showing the top players in terms of wins and SPS score. Three value boxes on the top showing the total US Open
-                                      matches played, total number of players and total number of countries in last 11 years "),
-                                   h4("Explorer page in web application is showing the comparison between the two countries in terms of wins, losses, average first serve speed, average Second
+                                      matches played, total number of players and total number of countries in last 11 years."),
+                                   h4("Explorer page in web application is showing the comparison between the two countries in terms of wins, losses, average first serve speed, average second
                                       serve speed. Explorer is also showing the top players for both countries."),
                                    h3("Effectiveness:"),
-                                   h4("The main goal of this visualization is to show the number of wins, SPS for each country in map.Since we are also comparing different 
+                                   h4("The main goal of this visualization is to show the number of wins, SPS for each country in map. Since we are also comparing different 
                                         countries, it is always a good idea to show it on choropleth maps to define the numbers for each country.
-                                        In the same row, I have also showed the top players in term of wins and SPS score. Exact number can be checked by hovering
+                                        In the same row, I have also showed the top players in term of wins and SPS score. Actual number can be checked by hovering
                                         over the country. Color maps have values from “Blue” to “Red” so that user can easily identify even small difference in the values of wins and SPS."),
-                                   h4("D3 line charts and scatter charts are used on Explorer page for comparing two countries. Since, we are comparing
+                                   h4("D3 line charts and scatter charts are used on explorer page for comparing two countries. Since, we are comparing
                                       the countries over the years which makes these two perfect choices. User can hover over the lines or points to get the exact number.
                                       Instead of comparing, user can pick one country as well by unchecking one of the country in the legend. In scatter plot, 
-                                      user can magnify the plot by checking the 'Magnify' on the top. This will magnify particular part of the chart.
-                                      By hovering over the points, user can check the actual values for eacH year. Google table at the bottom is showing top players
-                                      for both the countries.")
+                                      user can magnify the plot by checking the 'Magnify' on the top. This will magnify that part of the chart where user will hover the
+                                      cursor.By hovering cursor over the points, user can check the actual values for each year. Google tables at the bottom are showing top players
+                                      for both the countries.At the end of the analysis, I came to the conclusion that Roger Federer is best performing player whereas USA is
+                                      best performing country.")
                                      )#end of box
                                      )#end of column
                           
