@@ -212,9 +212,16 @@ dashboardPage(skin = "green",
                                    h2("Best Performing Countries in US Open"),
                                    h3("Introduction:"),
                                    p(
-                                     paste("Whereas we queried multiple markets in the Market Explorer, here you will be selecting a specific market at either the state,
-                                           county, city or zip code level.  Once you have selected a market, press the 'Go' button to reveal some key statistics [3] and
-                                           the seasonal and non-seasonal time series.")),
+                                     paste("Tennis is a famous racket sport that is played individually against a single opponent (singles) 
+                                           or between two teams of two players each (doubles). Objective of the game is to play the ball in 
+                                           such a way that the opponent is not able to play a valid return. Player who is  not nable to return
+                                           the ball will loose the point, while the opposite player will get the point.")),
+                                   h3("Data Analysis:"),
+                                   p(
+                                     paste("For the data analysis part, I compared different countries on the basis of matches palyed, won or lost over the years.
+                                            I plotted the results on the world map as it make more sense when you are comparing different countries.
+                                            Specifically, for analysing the serve I studied different serve patterns on the last 10 years of US
+                                           Open")),
                                    tags$strong("Non-Seasonal Home Value Time Series [4]"),
                                    p(
                                      paste("A non-seasonal time series consists of a trend component and an irregular component.
