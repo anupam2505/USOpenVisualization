@@ -1,7 +1,7 @@
 # Assignment 2 
 # Anupam Panwar
 # Date: Oct 1, 2016
-#Completed one
+#Completed one and submitted 
 
 # server.R
 
